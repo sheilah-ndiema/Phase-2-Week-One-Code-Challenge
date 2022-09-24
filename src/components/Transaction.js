@@ -1,14 +1,30 @@
 import React from "react";
 
-function Transaction() {
+const Transaction = (props) => {
+
+  let { date, description, category, amount } = props.transaction
+
+  let handledelete = (evt) => {
+    fetch(`http://localhost:8001/transactions/${props.transaction.id}`, {
+      method: 'DELETE',
+    })
+      .then(r => r.json())
+      .then(deletedTransaction => {
+        props.deleteTransactionFun(props.transaction)
+      })
+  }
+
   return (
     <tr>
-      <td>{"your code here..."}</td>
-      <td>{"your code here..."}</td>
-      <td>{"your code here..."}</td>
-      <td>{"your code here..."}</td>
+      <td>{date}</td>
+      <td>{description}</td>
+      <td>{category}</td>
+      <td>{amount}</td>
+      <td><button onClick={handledelete}>X</button></td>
     </tr>
   );
-}
+};
 
 export default Transaction;
+
+
